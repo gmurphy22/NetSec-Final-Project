@@ -1,0 +1,10 @@
+# secrets and runtime files, do not publish these for the red team phase
+key.pem
+users.db
+security.log
+
+# cert.pem is public but it gets regenerated anyway so no point tracking it
+cert.pem
+
+__pycache__/
+*.pyc
