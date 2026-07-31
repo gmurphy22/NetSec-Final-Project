@@ -1,6 +1,6 @@
 # Secure Chat, COMP 3500 Network Security Final Project
 
-A client/server chat app that runs on localhost. You register, log in, and send
+A client/server chat app that runs on localhost. Register, log in, and send
 messages over TLS.
 
 Author: Gage Murphy
@@ -45,14 +45,12 @@ generated when you run it, and they're in the .gitignore.
 
 ## Security controls
 
-| Layer | Control | What it's for |
-| Authentication | Argon2id with a per user salt | Password cracking, rainbow tables |
-| Authentication | Account lockout with backoff | Brute force logins |
-| Transport | TLS 1.2 or higher | Sniffing, MITM |
-| Session | Random 256 bit session tokens | Session hijacking |
-| Application | Input validation, parameterised SQL | Injection, malformed input |
-| Network | Connection firewall | Connection and login flooding |
-| Logging | Security log | Catching intrusion attempts |
+Authentication: Argon2id with a per-user salt (password cracking, rainbow tables), plus account lockout with backoff (brute-force logins)
+Transport:  TLS 1.2+ (sniffing, MITM)
+Session: random 256-bit session tokens (session hijacking)
+Application: input validation and parameterised SQL (injection, malformed input)
+Network: connection firewall (connection and login flooding)
+Logging: security log (catching intrusion attempts)
 
 
 ### Password storage
@@ -75,20 +73,6 @@ hard, so it's a lot more expensive to crack on a GPU.
 sense for a localhost app. Same idea though, only let approved connections in
 and throttle anyone being abusive, just done at the application layer with a
 localhost allowlist plus per IP connection and login rate limits.
-
-## Threat model
-
-The attacker here is another student in the class. They have this source code,
-packet capture tools, and can write scripts, but they don't have physical or
-admin access to my machine. The full asset list and the justification for each
-feature is in the threat model document.
-
-### For the red team phase
-
-- Don't publish `key.pem`, that's the TLS private key. `cert.pem` is the public
-  one. Both are git ignored anyway.
-- There's nothing hardcoded in the source. The TLS key, the salts and the
-  session tokens are all generated at runtime with a CSPRNG.
 
 ## References
 
